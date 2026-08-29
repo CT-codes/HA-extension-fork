@@ -1,4 +1,4 @@
-// Shared by the popup and the live preview on the options page.
+// Gemeinsam genutzt von Popup und Live-Vorschau auf der Optionsseite.
 
 const DEFAULT_OPTIONS = {
   url: '',
@@ -35,7 +35,7 @@ function buildFrame(options) {
   iframe.style.top = -offset + 'px';
   iframe.name = 'ha-main-window';
 
-  // The wrapper is shorter than the iframe, so the header scrolls out of sight
+  // Der Wrapper ist niedriger als der iframe, dadurch verschwindet der Header
   const wrapper = document.createElement('div');
   wrapper.className = 'wrapper';
   wrapper.style.width = width + 'px';

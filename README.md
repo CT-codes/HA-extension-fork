@@ -1,122 +1,126 @@
-# Home Assistant Extension (local Chrome build)
+# Home Assistant Extension (lokaler Chrome-Build)
 
-Shows a Home Assistant dashboard view in a popup on the Chrome toolbar.
+Zeigt eine Home-Assistant-Dashboard-Ansicht in einem Popup in der Chrome-Symbolleiste.
 
-Personal fork of [bokub/home-assistant-extension](https://github.com/bokub/home-assistant-extension),
-rebuilt as a local, unpacked extension.
+Persönlicher Fork von [bokub/home-assistant-extension](https://github.com/bokub/home-assistant-extension),
+umgebaut zu einer lokalen, entpackten Erweiterung.
 
-## What is different from the original
+## Unterschiede zum Original
 
-| | Original | This fork |
+| | Original | Dieser Fork |
 | --- | --- | --- |
-| Build | Webpack + Vue 2 + Bulma, `npm run build` | none — plain HTML, CSS and JS, loaded as-is |
-| Settings storage | `chrome.storage.sync` (synced to your Google account) | `chrome.storage.local` (stays on this machine) |
-| Browsers | Chrome (MV3) and Firefox (MV2) | Chrome only |
-| Distribution | Chrome Web Store / Firefox Add-ons | loaded unpacked from this folder |
+| Build | Webpack + Vue 2 + Bulma, `npm run build` | keiner — reines HTML, CSS und JS, wird direkt geladen |
+| Einstellungen | `chrome.storage.sync` (Sync mit dem Google-Konto) | `chrome.storage.local` (bleibt auf diesem Rechner) |
+| Browser | Chrome (MV3) und Firefox (MV2) | nur Chrome |
+| Verteilung | Chrome Web Store / Firefox Add-ons | entpackt aus diesem Ordner geladen |
 
-The context menu is also registered in `chrome.runtime.onInstalled` instead of at the
-top level of the service worker, which avoids a duplicate-id error every time MV3
-restarts the worker.
+Außerdem wird das Kontextmenü in `chrome.runtime.onInstalled` registriert statt auf oberster
+Ebene des Service Workers. Das vermeidet einen Fehler wegen doppelter ID, sobald MV3 den
+Worker neu startet.
 
-## 1. Prepare Home Assistant
+## 1. Home Assistant vorbereiten
 
-Home Assistant sends an `X-Frame-Options` header that stops any page from embedding it
-in a frame. That has to be turned off, otherwise the popup stays blank.
+Home Assistant sendet einen `X-Frame-Options`-Header, der jede Einbettung in einen Frame
+verhindert. Der muss abgeschaltet werden, sonst bleibt das Popup leer.
 
-**Recent versions** (HTTP config has been migrated to the UI):
+**Aktuelle Versionen** (die HTTP-Konfiguration wurde in die Oberfläche migriert):
 
-**Settings > System > Network > HTTP server > Advanced options**, then turn off
-**Send X-Frame-Options** (German UI: _HTTP-Server > Weitere Optionen > X-Frame-Options senden_).
+**Einstellungen > System > Netzwerk > HTTP-Server > Weitere Optionen**, dort
+**X-Frame-Options senden** deaktivieren.
 
-An `http:` block in `configuration.yaml` is ignored once this migration has happened,
-and stops working entirely in 2027.2.0 — remove it if it is still there.
+Ein `http:`-Block in der `configuration.yaml` wird nach dieser Migration ignoriert und
+funktioniert ab Version 2027.2.0 gar nicht mehr — falls noch vorhanden, entfernen.
 
-**Older versions:** add this to `configuration.yaml` and restart Home Assistant.
+**Ältere Versionen:** Folgendes in die `configuration.yaml` eintragen und Home Assistant
+neu starten.
 
 ```yaml
 http:
   use_x_frame_options: false
 ```
 
-> Only do this if your Home Assistant is not exposed to the open internet, or is behind
-> a reverse proxy that sets its own framing rules. The header exists to prevent
-> clickjacking.
+> Nur abschalten, wenn dein Home Assistant nicht offen im Internet steht oder hinter einem
+> Reverse Proxy sitzt, der eigene Framing-Regeln setzt. Der Header schützt vor Clickjacking.
 
-Then, in your dashboard, **create a new view** holding the cards you want in the popup:
+Danach im Dashboard **eine neue Ansicht anlegen** mit den Karten, die im Popup erscheinen sollen:
 
-- With a single card, turn on **panel mode** — it looks much better
-- A view-specific theme lets the popup match your browser's color scheme
-- The view can be hidden from the dashboard's tab bar; the extension still reaches it
-- Give the view its own URL, for example `extension`
+- Bei nur einer Karte den **Panel-Modus** aktivieren — sieht deutlich besser aus
+- Ein eigenes Theme für die Ansicht passt das Popup an das Farbschema des Browsers an
+- Die Ansicht darf in der Tab-Leiste des Dashboards ausgeblendet sein, die Erweiterung
+  erreicht sie trotzdem
+- Der Ansicht eine eigene URL geben, zum Beispiel `extension`
 
-## 2. Install in Chrome
+## 2. In Chrome installieren
 
-1. Open `chrome://extensions` and turn on **Developer mode** (top right)
-2. Click **Load unpacked** and select this folder
-3. Pin the extension so the icon stays visible in the toolbar
+1. `chrome://extensions` öffnen und oben rechts den **Entwicklermodus** einschalten
+2. Auf **Entpackte Erweiterung laden** klicken und diesen Ordner auswählen
+3. Die Erweiterung anpinnen, damit das Symbol dauerhaft sichtbar bleibt
 
-Chrome loads the extension from this folder for as long as it stays in place — don't
-move or delete it. Keep Developer mode on, or Chrome disables unpacked extensions.
+Chrome lädt die Erweiterung aus diesem Ordner, solange er dort liegt — also nicht
+verschieben oder löschen. Der Entwicklermodus muss eingeschaltet bleiben, sonst
+deaktiviert Chrome entpackte Erweiterungen.
 
-## 3. Configure
+## 3. Einrichten
 
-Right-click the toolbar icon and choose **Configure**, or click **Open options** in the
-popup while it is still unconfigured.
+Rechtsklick auf das Symbol in der Symbolleiste und **Configure** wählen, oder im noch
+nicht eingerichteten Popup auf **Open options** klicken.
 
-| Setting | Meaning |
+| Einstellung | Bedeutung |
 | --- | --- |
-| **URL** | Address of the view as it appears in your browser, e.g. `https://home.example.com/lovelace/extension` |
-| **Width** / **Height** | Size of the popup, in pixels |
-| **Hide header** | Crops the top of the view so the dashboard header is not shown |
-| **Header height** | How much to crop — Home Assistant's header is 56 pixels |
+| **URL** | Adresse der Ansicht, so wie sie im Browser steht, z. B. `https://home.example.com/lovelace/extension` |
+| **Width** / **Height** | Größe des Popups in Pixeln |
+| **Hide header** | Schneidet den oberen Rand ab, sodass der Dashboard-Header verschwindet |
+| **Header height** | Wie viel abgeschnitten wird — der Header von Home Assistant ist 56 Pixel hoch |
 
-The preview on the right updates as you type. Click **Save** to keep the settings; the
-popup uses them the next time you open it.
+Die Vorschau rechts aktualisiert sich beim Tippen. **Save** speichert die Einstellungen,
+das Popup übernimmt sie beim nächsten Öffnen.
 
-Chrome caps extension popups at **800 × 600 pixels**. The sliders allow a bit more than
-that so a cropped header still leaves 600 usable pixels (655 − 56 = 599); going past the
-cap just gets you scrollbars.
+Chrome begrenzt Popups von Erweiterungen auf **800 × 600 Pixel**. Die Regler erlauben
+etwas mehr, damit bei abgeschnittenem Header noch 600 nutzbare Pixel übrig bleiben
+(655 − 56 = 599). Alles darüber führt nur zu Scrollbalken.
 
-## Project layout
+## Aufbau des Projekts
 
-| File | Purpose |
+| Datei | Zweck |
 | --- | --- |
-| `manifest.json` | Extension manifest (MV3) |
-| `background.js` | Service worker — adds the _Configure_ context menu |
-| `popup.html` / `popup.js` / `popup.css` | Toolbar popup |
-| `options.html` / `options.js` / `options.css` | Options page with the live preview |
-| `dashboard.js` / `dashboard.css` | Shared code: defaults, storage access, rendering the frame |
-| `images/` | Icons |
+| `manifest.json` | Manifest der Erweiterung (MV3) |
+| `background.js` | Service Worker — legt den Kontextmenü-Eintrag _Configure_ an |
+| `popup.html` / `popup.js` / `popup.css` | Popup in der Symbolleiste |
+| `options.html` / `options.js` / `options.css` | Optionsseite mit Live-Vorschau |
+| `dashboard.js` / `dashboard.css` | Gemeinsamer Code: Standardwerte, Storage-Zugriff, Aufbau des Frames |
+| `images/` | Symbole |
 
-`dashboard.js` is loaded by both pages as a plain script, so the popup and the preview
-on the options page render through exactly the same code path.
+`dashboard.js` wird von beiden Seiten als einfaches Skript eingebunden. Popup und Vorschau
+auf der Optionsseite laufen dadurch über exakt denselben Code.
 
-## Making changes
+## Änderungen vornehmen
 
-There is no build step. Edit a file, then:
+Es gibt keinen Build-Schritt. Datei bearbeiten, dann:
 
-- **Popup or options page:** just reopen it
-- **`manifest.json` or `background.js`:** press **Reload** on the extension's card in
-  `chrome://extensions`
+- **Popup oder Optionsseite:** einfach neu öffnen
+- **`manifest.json` oder `background.js`:** auf der Karte der Erweiterung in
+  `chrome://extensions` auf **Aktualisieren** klicken
 
-To debug the popup, right-click it and choose **Inspect**. The service worker has its
-own **Service worker** link on the `chrome://extensions` card.
+Zum Debuggen des Popups Rechtsklick darauf und **Untersuchen** wählen. Der Service Worker
+hat auf der Karte in `chrome://extensions` einen eigenen Link.
 
-## Troubleshooting
+## Fehlerbehebung
 
-**Popup is blank or shows a frame error.** `X-Frame-Options` is still being sent — see
-step 1. Check the popup's console (right-click > Inspect) for the exact message.
+**Popup bleibt leer oder zeigt einen Frame-Fehler.** `X-Frame-Options` wird noch gesendet
+— siehe Schritt 1. Die genaue Meldung steht in der Konsole des Popups
+(Rechtsklick > Untersuchen).
 
-**Popup shows a login screen every time.** The frame uses the browser's normal cookies,
-so log in to Home Assistant once in a regular tab and tick "Keep me logged in".
+**Popup zeigt jedes Mal den Login.** Der Frame nutzt die normalen Cookies des Browsers.
+Einmal in einem regulären Tab bei Home Assistant anmelden und „Angemeldet bleiben"
+ankreuzen.
 
-**Settings are gone after reinstalling.** Chrome derives the extension ID from the
-folder path, and `chrome.storage.local` is tied to that ID. Loading the extension from a
-different location gives you a fresh, empty configuration.
+**Einstellungen sind nach einer Neuinstallation weg.** Chrome leitet die Erweiterungs-ID
+aus dem Ordnerpfad ab, und `chrome.storage.local` hängt an dieser ID. Wird die Erweiterung
+aus einem anderen Verzeichnis geladen, ist die Konfiguration leer.
 
-**"Configure" is missing from the context menu.** It is only created on install. Press
-**Reload** on the `chrome://extensions` card.
+**Der Eintrag „Configure" fehlt im Kontextmenü.** Er wird nur bei der Installation
+angelegt. Auf der Karte in `chrome://extensions` auf **Aktualisieren** klicken.
 
-## License
+## Lizenz
 
-MIT — see [LICENSE](LICENSE). Original work by Boris K ([bokub](https://github.com/bokub)).
+MIT — siehe [LICENSE](LICENSE). Ursprüngliche Arbeit von Boris K ([bokub](https://github.com/bokub)).

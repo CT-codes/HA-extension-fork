@@ -1,6 +1,6 @@
 const ID = 'configure';
 
-// The service worker restarts often, so the menu is created once per install
+// Der Service Worker startet ständig neu, deshalb wird das Menü einmalig bei der Installation angelegt
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     title: 'Configure',
