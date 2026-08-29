@@ -72,8 +72,8 @@ nicht eingerichteten Popup auf **Einstellungen öffnen** klicken.
 | **Kopfzeile ausblenden** | Schneidet den oberen Rand ab, sodass der Dashboard-Header verschwindet |
 | **Höhe der Kopfzeile** | Wie viel abgeschnitten wird — der Header von Home Assistant ist 56 Pixel hoch |
 
-Die Vorschau rechts aktualisiert sich beim Tippen. Ein Klick auf **Speichern** übernimmt die Einstellungen,
-das Popup übernimmt sie beim nächsten Öffnen.
+Die Vorschau rechts aktualisiert sich beim Tippen. Ein Klick auf **Speichern** sichert sie; das Popup
+verwendet sie beim nächsten Öffnen.
 
 Chrome begrenzt Popups von Erweiterungen auf **800 × 600 Pixel**. Die Regler erlauben
 etwas mehr, damit bei abgeschnittenem Header noch 600 nutzbare Pixel übrig bleiben
