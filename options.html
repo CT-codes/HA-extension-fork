@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Home Assistant Extension - Options</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="form">
+        <h1 class="subtitle">Options</h1>
+
+        <div class="field">
+          <label class="label" for="url">URL</label>
+          <input
+            id="url"
+            class="input"
+            type="text"
+            placeholder="URL of the Home Assistant page you want to display"
+          />
+        </div>
+
+        <div class="columns">
+          <div class="field">
+            <label class="label" for="height">Height <span id="height-value" class="value"></span></label>
+            <input id="height" type="range" min="25" max="655" />
+          </div>
+          <div class="field">
+            <label class="label" for="width">Width <span id="width-value" class="value"></span></label>
+            <input id="width" type="range" min="25" max="800" />
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="field">
+            <span class="label">Header visibility</span>
+            <label class="checkbox" for="hide-header">
+              <input id="hide-header" type="checkbox" />
+              Hide header
+            </label>
+          </div>
+          <div class="field">
+            <label class="label" for="header-height">Header height</label>
+            <input id="header-height" class="input" type="number" placeholder="56" />
+          </div>
+        </div>
+
+        <button id="save" class="button" type="button">Save</button>
+      </section>
+
+      <section class="preview">
+        <h1 class="subtitle">Preview</h1>
+        <div id="preview-wrapper" class="preview-wrapper"></div>
+      </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
