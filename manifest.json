@@ -1,6 +1,6 @@
 {
   "name": "Home Assistant",
-  "description": "A quick shortcut to your Home Assistant",
+  "description": "Schneller Zugriff auf dein Home Assistant",
   "version": "1.0.0",
   "manifest_version": 3,
   "options_page": "options.html",

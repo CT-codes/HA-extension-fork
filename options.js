@@ -43,12 +43,12 @@ function refresh() {
 
 function save() {
   saveOptions(currentOptions(), () => {
-    saveButton.textContent = 'Saved!';
+    saveButton.textContent = 'Gespeichert!';
     saveButton.disabled = true;
 
     clearTimeout(savedTimeout);
     savedTimeout = setTimeout(() => {
-      saveButton.textContent = 'Save';
+      saveButton.textContent = 'Speichern';
       saveButton.disabled = false;
     }, 2000);
   });

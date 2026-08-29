@@ -51,12 +51,12 @@ function buildAlert() {
 
   const title = document.createElement('p');
   title.className = 'title';
-  title.textContent = 'The Home Assistant extension is not configured';
+  title.textContent = 'Die Home-Assistant-Erweiterung ist noch nicht eingerichtet';
 
   const link = document.createElement('a');
   link.href = '/options.html';
   link.target = '_blank';
-  link.textContent = 'Open options';
+  link.textContent = 'Einstellungen öffnen';
 
   const subtitle = document.createElement('p');
   subtitle.className = 'subtitle';

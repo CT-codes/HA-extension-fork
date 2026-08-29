@@ -62,17 +62,17 @@ deaktiviert Chrome entpackte Erweiterungen.
 
 ## 3. Einrichten
 
-Rechtsklick auf das Symbol in der Symbolleiste und **Configure** wählen, oder im noch
-nicht eingerichteten Popup auf **Open options** klicken.
+Rechtsklick auf das Symbol in der Symbolleiste und **Einstellungen** wählen, oder im noch
+nicht eingerichteten Popup auf **Einstellungen öffnen** klicken.
 
 | Einstellung | Bedeutung |
 | --- | --- |
 | **URL** | Adresse der Ansicht, so wie sie im Browser steht, z. B. `https://home.example.com/lovelace/extension` |
-| **Width** / **Height** | Größe des Popups in Pixeln |
-| **Hide header** | Schneidet den oberen Rand ab, sodass der Dashboard-Header verschwindet |
-| **Header height** | Wie viel abgeschnitten wird — der Header von Home Assistant ist 56 Pixel hoch |
+| **Breite** / **Höhe** | Größe des Popups in Pixeln |
+| **Kopfzeile ausblenden** | Schneidet den oberen Rand ab, sodass der Dashboard-Header verschwindet |
+| **Höhe der Kopfzeile** | Wie viel abgeschnitten wird — der Header von Home Assistant ist 56 Pixel hoch |
 
-Die Vorschau rechts aktualisiert sich beim Tippen. **Save** speichert die Einstellungen,
+Die Vorschau rechts aktualisiert sich beim Tippen. Ein Klick auf **Speichern** übernimmt die Einstellungen,
 das Popup übernimmt sie beim nächsten Öffnen.
 
 Chrome begrenzt Popups von Erweiterungen auf **800 × 600 Pixel**. Die Regler erlauben
@@ -84,7 +84,7 @@ etwas mehr, damit bei abgeschnittenem Header noch 600 nutzbare Pixel übrig blei
 | Datei | Zweck |
 | --- | --- |
 | `manifest.json` | Manifest der Erweiterung (MV3) |
-| `background.js` | Service Worker — legt den Kontextmenü-Eintrag _Configure_ an |
+| `background.js` | Service Worker — legt den Kontextmenü-Eintrag _Einstellungen_ an |
 | `popup.html` / `popup.js` / `popup.css` | Popup in der Symbolleiste |
 | `options.html` / `options.js` / `options.css` | Optionsseite mit Live-Vorschau |
 | `dashboard.js` / `dashboard.css` | Gemeinsamer Code: Standardwerte, Storage-Zugriff, Aufbau des Frames |
@@ -118,7 +118,7 @@ ankreuzen.
 aus dem Ordnerpfad ab, und `chrome.storage.local` hängt an dieser ID. Wird die Erweiterung
 aus einem anderen Verzeichnis geladen, ist die Konfiguration leer.
 
-**Der Eintrag „Configure" fehlt im Kontextmenü.** Er wird nur bei der Installation
+**Der Eintrag „Einstellungen" fehlt im Kontextmenü.** Er wird nur bei der Installation
 angelegt. Auf der Karte in `chrome://extensions` auf **Aktualisieren** klicken.
 
 ## Lizenz

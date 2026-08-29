@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="utf-8" />
-    <title>Home Assistant Extension - Options</title>
+    <title>Home Assistant Erweiterung – Einstellungen</title>
     <link rel="stylesheet" href="dashboard.css" />
     <link rel="stylesheet" href="options.css" />
   </head>
   <body>
     <main class="container">
       <section class="form">
-        <h1 class="subtitle">Options</h1>
+        <h1 class="subtitle">Einstellungen</h1>
 
         <div class="field">
           <label class="label" for="url">URL</label>
@@ -17,40 +17,40 @@
             id="url"
             class="input"
             type="text"
-            placeholder="URL of the Home Assistant page you want to display"
+            placeholder="URL der Home-Assistant-Ansicht, die angezeigt werden soll"
           />
         </div>
 
         <div class="columns">
           <div class="field">
-            <label class="label" for="height">Height <span id="height-value" class="value"></span></label>
+            <label class="label" for="height">Höhe <span id="height-value" class="value"></span></label>
             <input id="height" type="range" min="25" max="655" />
           </div>
           <div class="field">
-            <label class="label" for="width">Width <span id="width-value" class="value"></span></label>
+            <label class="label" for="width">Breite <span id="width-value" class="value"></span></label>
             <input id="width" type="range" min="25" max="800" />
           </div>
         </div>
 
         <div class="columns">
           <div class="field">
-            <span class="label">Header visibility</span>
+            <span class="label">Kopfzeile</span>
             <label class="checkbox" for="hide-header">
               <input id="hide-header" type="checkbox" />
-              Hide header
+              Kopfzeile ausblenden
             </label>
           </div>
           <div class="field">
-            <label class="label" for="header-height">Header height</label>
+            <label class="label" for="header-height">Höhe der Kopfzeile</label>
             <input id="header-height" class="input" type="number" placeholder="56" />
           </div>
         </div>
 
-        <button id="save" class="button" type="button">Save</button>
+        <button id="save" class="button" type="button">Speichern</button>
       </section>
 
       <section class="preview">
-        <h1 class="subtitle">Preview</h1>
+        <h1 class="subtitle">Vorschau</h1>
         <div id="preview-wrapper" class="preview-wrapper"></div>
       </section>
     </main>

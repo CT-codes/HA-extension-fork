@@ -3,7 +3,7 @@ const ID = 'configure';
 // Der Service Worker startet ständig neu, deshalb wird das Menü einmalig bei der Installation angelegt
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    title: 'Configure',
+    title: 'Einstellungen',
     contexts: ['action'],
     id: ID,
   });
